@@ -16,3 +16,16 @@ can, I know that sometimes there are no ways around JS in your legacy browser
 app or the old node server you have been maintaining for a while. This book
 tells you to take the napkin of functional programming and whipe the crumbs of
 object orientation off the corners of your mouth. Buckle up and enjoy the ride.
+
+## More fun with FunPro
+
+`funpro` is a small lib to bring some of the pleasantries of functional programming
+to JS including union types, pattern matching and Task for async and IO. Of course
+you it also brings you Functors, Applicatives and Monads but these are really
+just fancy mathematical terms for some functionality that some of the types
+possess. It is inspired by things like Elm, Haskell and Foltale and I would
+highly recommend using it alongside something cool like Ramda.
+
+*^ links are missing*
+
+
