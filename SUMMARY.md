@@ -1,8 +1,8 @@
 # Summary
 
 * [Introduction](README.md)
-* [Purity and types](ch1.md)
-* [Modeling and Union types](ch2.md)
-* [Async and IO](ch3.md)
-* [Deedo's tips for FP with JS](ch4.md)
+* [Chapter 1: Maybe, Result and Pattern matching](ch1.md)
+* [Chapter 2: Creating own union types](ch2.md)
+* [Chapter 3: Async and IO](ch3.md)
+* [Chapter 4: Deedo's tips for FP with JS](ch4.md)
 
