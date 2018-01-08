@@ -39,7 +39,7 @@ R.map(toUpper, Maybe.Just(4))
 
 Let's you chain together multiple Maybes, while removing one layer so you don't
 end up with nested Maybes. The callback will receive the value of the previous
-Maybe run if is a `Just` or will skip if it is a `Nothing`.
+Maybe, if is a `Just` or will skip if it is a `Nothing`.
 
 ```js
 // (a -> Maybe b) -> Maybe a -> Maybe b
