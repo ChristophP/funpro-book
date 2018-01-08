@@ -12,9 +12,13 @@ and `concat` function (Monoid).
 
 ## Maybe
 
-Represents a value that might not be there. In Elm syntax.
-`type Maybe a = Just a | Nothing`
-It is a Functor(aka has a `map` function) and also Monad(aka has a `chain` function)
+Represents a value that might not be there. In Elm syntax:
+```elm
+type Maybe a = Just a | Nothing
+```
+It is a Functor(aka has a `map` function) and also Monad(aka has a `chain` function).
+
+### map
 
 ```js
 // (a -> b) -> Maybe a -> Maybe b
@@ -26,7 +30,11 @@ Maybe.Nothing().map(toUpper) // Nothing
 
 // with ramda
 R.map(toUpper, Maybe.Just(4))
+```
 
+### chain
+
+```js
 // (a -> Maybe b) -> Maybe a -> Maybe b
 Maybe.prototype.chain
 
