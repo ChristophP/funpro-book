@@ -20,6 +20,9 @@ It is a Functor(aka has a `map` function) and also Monad(aka has a `chain` funct
 
 ### map
 
+Let's you transform the value inside a Maybe. If it is a `Just` the function
+will be applied to it. If the Maybe is a `Nothing` the map has no effect.
+
 ```js
 // (a -> b) -> Maybe a -> Maybe b
 Maybe.prototype.map
@@ -34,6 +37,10 @@ R.map(toUpper, Maybe.Just(4))
 
 ### chain
 
+Let's you chain together multiple Maybes, while removing one layer so you don't
+end up with nested Maybes. The callback will receive the value of the previous
+Maybe run if is a `Just` or will skip if it is a `Nothing`.
+
 ```js
 // (a -> Maybe b) -> Maybe a -> Maybe b
 Maybe.prototype.chain
@@ -43,6 +50,6 @@ Maybe.Just([1, 2, 3]).chain(listHead) // Just(1)
 Maybe.Nothing().chain(listHead) // Nothing
 
 // with ramda
-R.chain(toUpper, Maybe.Just(4))
+R.chain(listHead, Maybe.Just(4))
 ```
 
