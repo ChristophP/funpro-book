@@ -12,4 +12,5 @@
   * [Working with the Data](ch2.md#working-with-the-data)
 * [Chapter 3: Async and IO](ch3.md)
 * [Chapter 4: Deedo's tips for FP with JS](ch4.md)
+* [API Documentation](ch5.md)
 
