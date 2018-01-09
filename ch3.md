@@ -72,7 +72,7 @@ before printing that it's done.
 // define a bunch of function which create tasks
 const getRandom = Task.of(Math.random);
 const fetchData = id => Task.of(fetch, [`somedomain.com?id=${id}`])
-  .chain(res => Task.of(res.text);
+  .chain(res => Task.of(() => res.text());
 const writeFile = (name, content) =>
   Task.of(writeFileAsync, [name, content, 'utf8']);
 const print = str => Task.of(console.log, [str]);
