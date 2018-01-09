@@ -11,6 +11,10 @@
   * [Triple Header](ch2.md#triple-header)
   * [Working with the Data](ch2.md#working-with-the-data)
 * [Chapter 3: Async and IO](ch3.md)
+  * [Creating Tasks](ch3.md#creating-tasks)
+  * [Running Tasks](ch3.md#running-tasks)
+  * [Working with Tasks](ch3.md#working-with-tasks)
+  * [Summary](ch3.md#summary)
 * [Chapter 4: Deedo's tips for FP with JS](ch4.md)
 * [API Documentation](ch5.md)
 

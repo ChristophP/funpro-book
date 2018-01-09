@@ -22,7 +22,7 @@ So by that logic, you should use a task for stuff like getting a random number,
 writing a file, making a network call, setting a timer and so on and also for
 anything that works asynchronously.
 
-## Creating and combining
+## Creating tasks
 
 Like I mentioned, Promises execute right away. So Tasks use a trick of wrapping
 Promises into functions so the execution can be delayed till later.
@@ -141,7 +141,7 @@ Task.sequence([fetchTask, someOtherFetchTask])
   .map(([result1, result2]) => ...);
 ```
 
-This is actually just a short hand for this:
+`Task.sequence` is actually just a short hand for chaining tasks and ignoring the argument:
 ```js
 fetchTask.chain(() => someOtherFetchTask)
   .map(([result1, result2]) => ...);
