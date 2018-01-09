@@ -17,4 +17,5 @@
   * [Summary](ch3.md#summary)
 * [Chapter 4: Deedo's tips for FP with JS](ch4.md)
 * [API Documentation](ch5.md)
-
+  * [Maybe](ch3.md#maybe)
+  * [Result](ch3.md#result)
