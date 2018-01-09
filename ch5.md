@@ -57,7 +57,7 @@ R.chain(listHead, Maybe.Just(4))
 
 Represents a result for an operation that might fail. In Elm syntax:
 ```elm
-type Result a b = Ere a | Ok b
+type Result a b = Err a | Ok b
 ```
 It is a Functor(aka has a `map` function) and also Monad(aka has a `chain` function).
 
