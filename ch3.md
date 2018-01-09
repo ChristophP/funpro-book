@@ -18,7 +18,7 @@ So the trick is to use Tasks for anything that breaks the laws of purity.
 1. Same input will always generate the same output.
 2. No side-effects as a result of running the function.
 
-So by that logic you should use a task for stuff like getting a random number,
+So by that logic, you should use a task for stuff like getting a random number,
 writing a file, making a network call, setting a timer and so on and also for
 anything that works asynchronously.
 
@@ -36,8 +36,8 @@ fetch('/some/url');
 ```
 
 You can create a Task with `Task.of`. It takes a function as the first argument
-and a list of parameters as the second one. The function can return a promise or
-any normal value.
+and a list of parameters with which the function will be called as the second one.
+The function can return a promise or any normal value.
 
 ```js
 Task.of(fetch, ['/some/url']);
@@ -69,19 +69,13 @@ before printing that it's done.
 
 
 ```js
+// define a bunch of function which create tasks
 const getRandom = Task.of(Math.random);
 const fetchData = id => Task.of(fetch, [`somedomain.com?id=${id}`])
   .chain(res => Task.of(res.text);
-
 const writeFile = (name, content) =>
   Task.of(writeFileAsync, [name, content, 'utf8']);
 const print = str => Task.of(console.log, [str]);
-
-// get random number
-// hash it
-// make request
-// write file
-// print finish
 
 // export a Task so the importing module can call .run()
 module.exports = getRandom
@@ -91,12 +85,13 @@ module.exports = getRandom
   .chain(() => print('Done'));
 ```
 
-By using Task that don't execute right away, you are giving the control over
+By using Tasks that don't execute right away, you are giving the control over
 the side effects to the calling program. It's like handing somebody a grenade
 and letting them pull the pin out. This way you keep your hands clean and stay
-pure and push the impure code to the edge of you application. This is very
+pure and push the impure code to the edges of you application. This is very
 similar to the IO Monad in Haskell that only execute if it is passed to the
-`main` function of the program. In JS we have to pull the trigger ourselves,
+`main` function of the program or contain within another IO monad.
+In JS we have to pull the trigger ourselves,
 ideally only calling `.run()` once in the entire program. That way, you can
 write your entire program without impure code except for that one line and your
 program will be easy to test and simple to reason about.
@@ -105,8 +100,8 @@ program will be easy to test and simple to reason about.
 
 Mapping allows you to access the value the task resolves to once it is run
 and transforming it without taking it out of the Task context. Chaining also
-allows you to access that value but lets you chain new tasks onto the previous
-one. But to make tasks truly powerful we need a way to handle errors and
+allows you to access that value, but lets you chain new tasks onto the previous
+one. But to make tasks truly powerful, we need a way to handle errors and
 control execution flow.
 
 ```js
@@ -148,7 +143,8 @@ Task.sequence([fetchTask, someOtherFetchTask])
 
 This is actually just a short hand for this:
 ```js
-fetchTask.chain(() => someOtherFetchTask);
+fetchTask.chain(() => someOtherFetchTask)
+  .map(([result1, result2]) => ...);
 ```
 
 ## Summary
