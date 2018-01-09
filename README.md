@@ -28,4 +28,11 @@ highly recommend using it alongside something cool like Ramda.
 
 *^ links are missing*
 
+Are you familiar with basic functional programming and do you know these concepts:
 
+- Pure functions
+- Currying and partial function applications
+- (Hindley-Milner) type signatures
+- Data Immutable data
+
+If not take a look at the great `Mostly adequate guide to Functional Programming`.
