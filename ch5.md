@@ -53,3 +53,62 @@ Maybe.Nothing().chain(listHead) // Nothing
 R.chain(listHead, Maybe.Just(4))
 ```
 
+## Result
+
+Represents a result for an operation that might fail. In Elm syntax:
+```elm
+type Result a b = Ere a | Ok b
+```
+It is a Functor(aka has a `map` function) and also Monad(aka has a `chain` function).
+
+### map
+
+Let's you transform the value inside a Result. If it is an `Ok` the function
+will be applied to it. If the Result is a `Err` the map has no effect.
+
+```js
+// (a -> value) -> Result x a -> Result x value
+Result.prototype.map
+
+const toUpper = str => str.toUpperCase();
+Result.Ok('Nicky').map(toUpper) // Ok('NICKY')
+Ok.Err('Oh no!').map(toUpper) // Err('Oh no!')
+
+// with ramda
+R.map(toUpper, Result.Ok(4));
+```
+
+### mapError
+Let's you transform the error inside a Result. If it is an `Err` the function
+will be applied to it. If the Result is an `Ok` the function has no effect.
+
+```js
+// (a -> value) -> Result a x -> Result value x
+Result.prototype.mapError
+
+const toUpper = str => str.toUpperCase();
+Result.Ok('Nicky').map(toUpper) // Ok('Nicky')
+Ok.Err('Oh no!').map(toUpper) // Err('OH NO!')
+```
+
+### chain
+
+Let's you chain together multiple Results, while removing one layer so you don't
+end up with nested Results. The callback will receive the value of the previous
+Result, if is an `Ok` or will skip if it is an `Err`.
+
+```js
+// (a -> Result value) -> Result x a -> Result x value
+Result.prototype.chain
+
+const safeParseInt = str => {
+  const int = parseInt(str);
+  return isNaN(int) ? Result.Err('Nope') : Result.Ok(int);
+};
+Result.Ok('123').chain(safeParseInt) // Ok(123)
+Result.Err('This is NaN').chain(safeParseInt) // Err('This is NaN')
+
+// with ramda
+R.chain(safeParseInt, Result.Ok(4));
+```
+
