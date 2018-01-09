@@ -87,8 +87,8 @@ will be applied to it. If the Result is an `Ok` the function has no effect.
 Result.prototype.mapError
 
 const toUpper = str => str.toUpperCase();
-Result.Ok('Nicky').map(toUpper) // Ok('Nicky')
-Result.Err('Oh no!').map(toUpper) // Err('OH NO!')
+Result.Ok('Nicky').mapError(toUpper) // Ok('Nicky')
+Result.Err('Oh no!').mapError(toUpper) // Err('OH NO!')
 ```
 
 ### chain
