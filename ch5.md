@@ -72,7 +72,7 @@ Result.prototype.map
 
 const toUpper = str => str.toUpperCase();
 Result.Ok('Nicky').map(toUpper) // Ok('NICKY')
-Ok.Err('Oh no!').map(toUpper) // Err('Oh no!')
+Result.Err('Oh no!').map(toUpper) // Err('Oh no!')
 
 // with ramda
 R.map(toUpper, Result.Ok(4));
@@ -88,7 +88,7 @@ Result.prototype.mapError
 
 const toUpper = str => str.toUpperCase();
 Result.Ok('Nicky').map(toUpper) // Ok('Nicky')
-Ok.Err('Oh no!').map(toUpper) // Err('OH NO!')
+Result.Err('Oh no!').map(toUpper) // Err('OH NO!')
 ```
 
 ### chain
