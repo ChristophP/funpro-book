@@ -156,3 +156,62 @@ Result.Err('This is NaN').chain(safeParseInt) // Err('This is NaN')
 R.chain(safeParseInt, Result.Ok(4));
 ```
 
+## union
+
+Create your own union types. It takes an object, which Constructor names as
+keys and the number of arguments(arity) of that the constructors can take.
+
+```js
+Name = union({
+  FullName: 2,
+  NickName: 1,
+  NoName: 0,
+});
+
+const name1 = Name.FullName('Peter', 'Lustig');
+const name2 = Name.NichName('Pete');
+const name3 = Name.FullName();
+```
+
+The constructors are always curried. So if you have an arity of more than 2,
+you can do partial function application.
+
+```js
+const lastNameToName = Name.FullName('Max'); // returns a function which takes the second argument.
+const name = lastNameToName('Pearson'); // Name('Max', 'Pearson')
+```
+
+You can extend the type by accessing the prototype and adding methods, like this.
+```js
+Name.prototype.toString = function() {
+  return matchWith(this, {
+    FullName: (first, last) => `${first} ${last}`,
+    NickName: name => name,
+    NoName: 'Unknown',
+  });
+}
+```
+
+### matchWith
+
+Pattern match on union types. Takes a union and an object of cases. The keys
+need to be the constructors of the union and the values functions which accept
+the arguments stored within each constructor. It returns the return value of the
+function which is matched.
+
+Errors are thrown when:
+- The first argument is not a union.
+- Not all cases are handled in the case object.
+- Cases are handled that don't correspond to any constructor.
+
+```js
+const age = Just(30);
+matchWith(age, {
+  Just: val => val.toString(),
+  Nothing: () => 'I am not saying',
+});
+```
+
+### Task
+
+...
