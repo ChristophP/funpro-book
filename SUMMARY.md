@@ -21,3 +21,4 @@
   * [Result](ch5.md#result)
   * [Union](ch5.md#union)
   * [MatchWith](ch5.md#matchwith)
+  * [Task](ch5.md#task)

@@ -232,12 +232,31 @@ matchWith(age, {
 });
 
 // throws an error because the first argument is not a union
-matchWith((), {
+matchWith({}, {
   Just: val => val.toString(),
   Nothing: () => 'I am not saying',
 });
 ```
 
-### Task
+## Task
 
-...
+Task are there for asynchronous tasks and to wrap up side-effects.
+They compose pretty well and can be mapped and chain.
+
+### .of
+
+### .succeed
+
+### .fail
+
+### .all
+
+### .sequence
+
+### #map
+
+### #mapError
+
+### #chain
+
+### #onError
