@@ -199,14 +199,40 @@ need to be the constructors of the union and the values functions which accept
 the arguments stored within each constructor. It returns the return value of the
 function which is matched.
 
+```js
+const age = Just(30);
+matchWith(age, {
+  Just: val => val.toString(),
+  Nothing: () => 'I am not saying',
+}); // returns '30'
+
+
+const result = Result.Err('Bad Error');
+matchWith(result, {
+  Ok: val => val.toString(),
+  Err: err => `Geez, not again: ${err}`,
+}); // returns 'Geez, not again: Bad Error'
+```
+
 Errors are thrown when:
 - The first argument is not a union.
 - Not all cases are handled in the case object.
 - Cases are handled that don't correspond to any constructor.
 
 ```js
-const age = Just(30);
+// throws an error because Nothing is not handled
 matchWith(age, {
+  Just: val => val.toString(),
+});
+
+// throws an error because Nuttin is not a recognized pattern for `Maybe`
+matchWith(age, {
+  Just: val => val.toString(),
+  Nuttin: () => 'I am not saying',
+});
+
+// throws an error because the first argument is not a union
+matchWith((), {
   Just: val => val.toString(),
   Nothing: () => 'I am not saying',
 });
