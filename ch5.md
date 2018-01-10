@@ -18,7 +18,29 @@ type Maybe a = Just a | Nothing
 ```
 It is a Functor(aka has a `map` function) and also Monad(aka has a `chain` function).
 
-### map
+### .Just
+
+Takes some value and creates a `Just`
+
+```js
+// a -> Maybe a
+Maybe.Just
+
+Maybe.Just('Nicky') // Just('Nicky')
+```
+
+### .Nothing
+
+Creates a `Nothing`. Takes no arguments.
+
+```js
+// () -> Maybe a
+Maybe.Nothing
+
+Maybe.Nothing() // Nothing
+```
+
+### #map
 
 Let's you transform the value inside a Maybe. If it is a `Just` the function
 will be applied to it. If the Maybe is a `Nothing` the map has no effect.
@@ -35,7 +57,7 @@ Maybe.Nothing().map(toUpper) // Nothing
 R.map(toUpper, Maybe.Just(4))
 ```
 
-### chain
+### #chain
 
 Let's you chain together multiple Maybes, while removing one layer so you don't
 end up with nested Maybes. The callback will receive the value of the previous
@@ -61,7 +83,29 @@ type Result a b = Err a | Ok b
 ```
 It is a Functor(aka has a `map` function) and also Monad(aka has a `chain` function).
 
-### map
+### .Ok
+
+Takes a value and creates an `Ok`.
+
+```js
+// a -> Result a
+Result.Ok
+
+Result.Ok(42) // Result(42)
+```
+
+### .Err
+
+Takes a value and creates an `Err`.
+
+```js
+// a -> Result a
+Result.Err
+
+Result.Err('Oh no') // Result('Oh no')
+```
+
+### #map
 
 Let's you transform the value inside a Result. If it is an `Ok` the function
 will be applied to it. If the Result is a `Err` the map has no effect.
@@ -78,7 +122,7 @@ Result.Err('Oh no!').map(toUpper) // Err('Oh no!')
 R.map(toUpper, Result.Ok(4));
 ```
 
-### mapError
+### #mapError
 Let's you transform the error inside a Result. If it is an `Err` the function
 will be applied to it. If the Result is an `Ok` the function has no effect.
 
@@ -91,7 +135,7 @@ Result.Ok('Nicky').mapError(toUpper) // Ok('Nicky')
 Result.Err('Oh no!').mapError(toUpper) // Err('OH NO!')
 ```
 
-### chain
+### #chain
 
 Let's you chain together multiple Results, while removing one layer so you don't
 end up with nested Results. The callback will receive the value of the previous
