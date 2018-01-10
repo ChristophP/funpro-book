@@ -19,6 +19,6 @@
 * [API Documentation](ch5.md)
   * [Maybe](ch5.md#maybe)
   * [Result](ch5.md#result)
-  * [Union](ch5.md#union)
-  * [MatchWith](ch5.md#matchwith)
+  * [union](ch5.md#union)
+  * [matchWith](ch5.md#matchwith)
   * [Task](ch5.md#task)
