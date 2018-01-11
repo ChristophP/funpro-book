@@ -359,7 +359,7 @@ fails.
 Task.prototype.chain
 
 const authTask = Task.of(fetch, ['auth.api.com']);
-const loadDataTask = token => Task.of(fetch, [api.data.com]);
+const loadDataTask = token => Task.of(fetch, ['api.data.com']);
 Task.of(authTask).chain(loadDataTask) // chains the two tasks
 
 // you can chain as many as you want
@@ -368,7 +368,7 @@ Task.of(authTask)
   .chain(data => someOtherTask) // can go on and on
 
 // with ramda
-R.chain(token => Task.of(fetch, [api.data.com]), Task.of(fetch, ['auth.api.com']))
+R.chain(token => Task.of(fetch, ['api.data.com']), Task.of(fetch, ['auth.api.com']))
 ```
 
 ### #onError
