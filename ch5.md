@@ -269,7 +269,6 @@ Task.of(() => new Promise((resolve) => setTimeout(resolve, 1000)));
 Create a task that immediately succeeds with the given value.
 
 ```js
-// get from the network in the browser
 Task.succeed(42);
 ```
 
@@ -279,10 +278,8 @@ Create a task that immediately fails with the given error. The error can be any
 value but should ideally be a string or an Error object.
 
 ```js
-// get from the network in the browser
 Task.fail('Something went wrong');
 
-// get from the network in the browser
 Task.fail(new Error('OMG'));
 ```
 
