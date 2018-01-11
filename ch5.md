@@ -400,7 +400,7 @@ Task.of(fetch, ['api.com']).run(); // actually runs the network request
 
 // this is how create a task and only need one `run` with pure code
 const main = Task.of(authTask, ['someid'])
-  .chain(id => dataTaskFromId(id))
+  .chain(token => dataTaskFromToken(token))
   .map(data => ...)
   .onError(err => ...)
 
