@@ -243,20 +243,167 @@ matchWith({}, {
 Task are there for asynchronous tasks and to wrap up side-effects.
 They compose pretty well and can be mapped and chain.
 
+In elm code:
+```elm
+Task error value
+```
+
 ### .of
+
+Creating a Task from a function and a list of arguments it should be called
+with. The function can return a regular value or a Promise.
+
+```js
+// get from the network in the browser
+Task.of(fetch, ['https://example.com', { credentials: 'include' }]);
+
+// get a random number
+Task.of(Math.random);
+
+// set a timeout
+Task.of(() => new Promise((resolve) => setTimeout(resolve, 1000)));
+```
 
 ### .succeed
 
+Create a task that immediately succeeds with the given value.
+
+```js
+// get from the network in the browser
+Task.succeed(42);
+```
+
 ### .fail
+
+Create a task that immediately fails with the given error. The error can be any
+value but should ideally be a string or an Error object.
+
+```js
+// get from the network in the browser
+Task.fail('Something went wrong');
+
+// get from the network in the browser
+Task.fail(new Error('OMG'));
+```
 
 ### .all
 
+Takes a list of tasks and returns a new task which, will (when run) execute
+all of these tasks concurrently. If successful it will succeed with an array
+of the tasks results. The first task that fails will make everything fail.
+
+```js
+Task.all([Task.of(fetch, ['my.api.com']), Task.of(fetch, ['example.com'])])
+  .map(([result1, result2]) => ...) // will be mapped if fetch succeeds
+  .mapError(err => ...) // will be called if fetch fails
+
+Task.all([Task.succeed(42), Task.fail('fail one'), Task.fail('fail 2')])
+  .mapError(err => ...) // 'fail one'
+```
+
 ### .sequence
 
+Like `Task.all` but executes the tasks sequentially.
+
+```js
+Task.sequence([Task.of(fetch, ['my.api.com']), Task.of(fetch, ['example.com'])])
+  .map(([result1, result2]) => ...) // will be mapped if fetch succeeds
+  .mapError(err => ...) // will be called if fetch fails
+
+Task.sequence([Task.succeed(42), Task.fail('fail one'), Task.fail('fail 2')])
+  .mapError(err => ...) // 'fail one'
+```
 ### #map
+
+Let's you transform the value with which the Task will resolve.
+If the task succeed the function will be applied to it its value.
+If it fails the map has no effect. `map` returns a new Task with the mapped value.
+The mapping will be executed as soon as the task succeeds.
+
+```js
+// (a -> value) -> Task x a -> Task x value
+Task.prototype.map
+
+const toUpper = str => str.toUpperCase();
+Task.succeed('Hello').map(toUpper) // will map the value
+Task.fail('Oh no').map(toUpper) // does nothing
+
+// with ramda
+R.map(toUpper, Task.succeed('Hello'))
+```
 
 ### #mapError
 
+Let's you transform the value with which the Task will resolve.
+If the task succeed the function will be applied to it its value.
+If it fails the map has no effect. `map` returns a new Task with the mapped value.
+
+```js
+// (a -> b) -> Task a value -> Task b value
+Task.prototype.mapError
+
+const toUpper = str => str.toUpperCase();
+Task.succeed('Hello').map(toUpper) // does nothing
+Task.fail('Oh no').map(toUpper) // will map the error
+```
+
 ### #chain
 
+Chain multiple tasks together. The first tasks will be completely done, when
+the second task starts. Takes a function which gets the resolved value of the
+previous task and returns the next task. The chain will end as soon as one task
+fails.
+
+```js
+// (a -> Task err value) -> Task x a -> Task err value
+Task.prototype.chain
+
+const authTask = Task.of(fetch, ['auth.api.com']);
+const loadDataTask = token => Task.of(fetch, [api.data.com]);
+Task.of(authTask).chain(loadDataTask) // chains the two tasks
+
+// you can chain as many as you want
+Task.of(authTask)
+  .chain(loadDataTask)
+  .chain(data => someOtherTask) // can go on and on
+
+// with ramda
+R.chain(token => Task.of(fetch, [api.data.com]), Task.of(fetch, ['auth.api.com']))
+```
+
 ### #onError
+
+Recover from failing tasks. Takes a function, which receives the error and returns
+a new task.
+
+```js
+// (err -> Task x value) -> Task err a -> Task x value
+Task.prototype.onError
+
+Task.fail('Oh no').onError(err => Task.of(fetch, ['other.data.com'])) // will rescue use the fallback
+Task.succeed('Hello').onError(err => Task.of(fetch, ['other.data.com']) // does nothing
+```
+
+### #run
+
+This is how tasks are actually executed. Since calling this function is **impure**
+you should ideally only call it once in you entire program. If you `chain` and
+`map` correctly then more than once shouldn't be necessary and keeps the rest of your
+code **pure**. It returns a promise which fulfills if the Task succeeds or rejects
+if the task fails. If you use `run` right and only use it to kick of your application
+then you can typically ignore this promise.
+
+```js
+Task.prototype.run
+
+Task.of(fetch, ['api.com']).run(); // actually runs the network request
+
+// this is how create a task and only need one `run` with pure code
+const main = Task.of(authTask, ['someid'])
+  .chain(id => dataTaskFromId(id))
+  .map(data => ...)
+  .onError(err => ...)
+
+// impure code
+main.run();
+```
