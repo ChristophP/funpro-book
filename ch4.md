@@ -30,7 +30,7 @@ var val3 = 6; // can be reassigned
 With `const` you never have to check if that reference it changed, which makes
 the program very easy and straighforward.
 
-## avoid statements and try to use expressions
+## Avoid statements and try to use expressions
 
 This one goes a long way. The difference between a statement and an expression is
 that an expression can always be evaluated to a single value. Just use this example
@@ -52,7 +52,7 @@ if (someCondition) {
 
 ### Avoid loops, use functions and recursion
 
-## use arrow functions and currying
+## Use arrow functions and currying
 
 As you probably know there are two kinds of functions in JS. The ones which are
 created with the `function` keyword and the ES6 addition arrow functions.
@@ -82,7 +82,7 @@ obj.someFunction(); // returns `this`, which points to `window` or global object
 someFunction(); // also returns `this`, which points to `window` or global object
 ```
 
-## currying and partial function application
+## Currying and partial function application
 
 - Haskell Curry origins
 - simple arrow currying
@@ -156,4 +156,4 @@ curriedAdd(3)(6) // 9
 or only a couple at a time.
 
 
-### Modelling data accurately
+## Modelling data accurately
