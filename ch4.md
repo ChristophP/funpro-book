@@ -148,8 +148,8 @@ where there. Let's do this again with add.
 const add = (a, b) => a + b; // not a curried function
 const curriedAdd = curry(add);
 
-curriedAdd(3, 6) // 9
-curriedAdd(3)(6) // 9
+curriedAdd(3, 6) // 9, works
+curriedAdd(3)(6) // 9, also works
 ```
 
 `Ramda`'s function are all precurried so you can call them passing all arguments
