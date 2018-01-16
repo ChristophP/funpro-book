@@ -129,13 +129,13 @@ Let's fix this. We can use JS to create a function, which curries other function
 in just a couple of lines.
 
 ```js
-const curry = (fn) => {
-  const resolver = (...args) => {
-    return (...innerArgs) => {
+const curry = fn => {
+  const resolver = (...args) => (
+    (...innerArgs) => {
       const local = [...args, ...innerArgs];
       return local.length >= fn.length ? fn(...local) : resolver(...local);
-    };
-  };
+    }
+  );
   return resolver();
 };
 ```
