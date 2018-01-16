@@ -69,6 +69,7 @@ Maybe.prototype.chain
 
 const listHead = list => list.length === 0 ? Maybe.Nothing() : Maybe.Just(list[0])
 Maybe.Just([1, 2, 3]).chain(listHead) // Just(1)
+Maybe.Just([]).chain(listHead) // Nothing
 Maybe.Nothing().chain(listHead) // Nothing
 
 // with ramda
@@ -150,7 +151,8 @@ const safeParseInt = str => {
   return isNaN(int) ? Result.Err('Nope') : Result.Ok(int);
 };
 Result.Ok('123').chain(safeParseInt) // Ok(123)
-Result.Err('This is NaN').chain(safeParseInt) // Err('This is NaN')
+Result.Ok('This is NaN').chain(safeParseInt) // Err('Nope')
+Result.Err('This is also NaN').chain(safeParseInt) // Err('This is also NaN')
 
 // with ramda
 R.chain(safeParseInt, Result.Ok(4));
