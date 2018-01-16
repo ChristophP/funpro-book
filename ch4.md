@@ -130,12 +130,10 @@ in just a couple of lines.
 
 ```js
 const curry = fn => {
-  const resolver = (...args) => (
-    (...innerArgs) => {
+  const resolver = (...args) => (...innerArgs) => {
       const local = [...args, ...innerArgs];
       return local.length >= fn.length ? fn(...local) : resolver(...local);
-    }
-  );
+  };
   return resolver();
 };
 ```
