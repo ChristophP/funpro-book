@@ -129,17 +129,17 @@ Let's fix this. We can use JS to create a function, which curries other function
 in just a couple of lines.
 
 ```js
-const curry = fn => {
+const curry = (fn, arity = fn.length) => {
   const resolver = (...args) => (...innerArgs) => {
       const local = [...args, ...innerArgs];
-      return local.length >= fn.length ? fn(...local) : resolver(...local);
+      return local.length >= arity ? fn(...local) : resolver(...local);
   };
   return resolver();
 };
 ```
 
 The resulting function will check how many arguments are passed and return another
-function expecting the remaining arguments or the fonal result if all arguments
+function expecting the remaining arguments or the final result if all arguments
 where there. Let's do this again with add.
 
 ```js
@@ -150,8 +150,33 @@ curriedAdd(3, 6) // 9, works
 curriedAdd(3)(6) // 9, also works
 ```
 
+Usually `Function.prototype.length` will give the correct number of arguments
+that a function will accept. But because some functions in JS have optional arguments
+or are use rest arguments, sometimes the `arity` to which the function should be
+curried needs to be passed explicitly.
+
+```js
+// add takes two arguments
+const add = (a, b) => a + b;
+add.length; // 2
+myAdd = curry(add); // the length property is fine is this case as is used for the arity by default
+myAdd(2)(4); // 6
+
+// fetch takes 2 arguments but the second one is optional
+fetch.length // 1,
+
+// if we want to use the second argument we have to curry, passing the arity explicitly
+const myFetch = curry(fetch, 2);
+fetch('some.url')({ ... }); // works
+
+// Array.of takes an indefinite number of args
+Array.of(2, 4, 4) // [2, 4, 4]
+Array.of.length // 0
+
+const tuple = curry(Array.of, 2);
+tuple('a')('b') // ['a', 'b']
+```
 `Ramda`'s function are all precurried so you can call them passing all arguments
 or only a couple at a time.
-
 
 ## Modelling data accurately
