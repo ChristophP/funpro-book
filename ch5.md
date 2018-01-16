@@ -171,16 +171,16 @@ Name = union({
 });
 
 const name1 = Name.FullName('Peter', 'Lustig');
-const name2 = Name.NichName('Pete');
-const name3 = Name.FullName();
+const name2 = Name.NickName('Pete');
+const name3 = Name.NoName();
 ```
 
 The constructors are always curried. So if you have an arity of more than 2,
 you can do partial function application.
 
 ```js
-const lastNameToName = Name.FullName('Max'); // returns a function which takes the second argument.
-const name = lastNameToName('Pearson'); // Name('Max', 'Pearson')
+const maxNeedsLastName = Name.FullName('Max'); // returns a function which takes the second argument.
+const name = maxNeedsLastName('Pearson'); // FullName('Max', 'Pearson')
 ```
 
 You can extend the type by accessing the prototype and adding methods, like this.
@@ -189,9 +189,9 @@ Name.prototype.toString = function() {
   return matchWith(this, {
     FullName: (first, last) => `${first} ${last}`,
     NickName: name => name,
-    NoName: 'Unknown',
+    NoName: () => 'Unknown',
   });
-}
+};
 ```
 
 ### matchWith
